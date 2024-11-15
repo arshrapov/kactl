@@ -1,12 +1,4 @@
-/**
-*	Author: nor
- *	Date: 2024-11-11
- *	License: CC0
- *	Source: yosupo.judge
- *	Description: randomizer
- *	Status: works
- */
-#pragma once
+#include <stdc++.h/bits>
  
 struct Random : std::mt19937 {
 	using std::mt19937::mt19937;

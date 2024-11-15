@@ -1,3 +1,6 @@
+Just to mention:
+Don't start writing some shitty implementation in case if you didn't read all problems.
+
 Pre-submit:
 Write a few simple test cases if sample is not enough.
 Are time limits close? If so, generate max cases.

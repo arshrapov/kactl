@@ -4,20 +4,30 @@
  * License: CC0
  * Description: Chinese Remainder Theorem.
  *
- * \texttt{crt(a, m, b, n)} computes $x$ such that $x\equiv a \pmod m$, $x\equiv b \pmod n$.
- * If $|a| < m$ and $|b| < n$, $x$ will obey $0 \le x < \text{lcm}(m, n)$.
- * Assumes $mn < 2^{62}$.
+ * $x \equiv a_i$ $mod m_i$
+ * $m_i$ is co-prime
  * Time: $\log(n)$
- * Status: Works
+ * Status: not tested
  */
 #pragma once
 
 #include "euclid.h"
 
-ll crt(ll a, ll m, ll b, ll n) {
-	if (n > m) swap(a, b), swap(m, n);
-	ll x, y, g = euclid(m, n, x, y);
-	assert((a - b) % g == 0); // else no solution
-	x = (b - a) % n * x % n / g * m + a;
-	return x < 0 ? x + m*n/g : x;
+struct Congruence {
+ ll a, m;
+};
+
+ll chinese_remainder_theorem(vector<Congruence> const& congruences) {
+	ll M = 1;
+	for (auto const& congruence : congruences) {
+		M *= congruence.m;
+	}
+	ll solution = 0;
+	for (auto const& congruence : congruences) {
+		ll a_i = congruence.a;
+		ll M_i = M / congruence.m;
+		ll N_i = mod_inv(M_i, congruence.m);
+		solution = (solution + a_i * M_i % M * N_i) % M;
+	}
+	return solution;
 }

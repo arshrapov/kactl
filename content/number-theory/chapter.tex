@@ -8,6 +8,7 @@
 	\kactlimport{ModSum.h}
 	\kactlimport{ModMulLL.h}
 	\kactlimport{ModSqrt.h}
+	\kactlimport{DiophantineEquation.h}
 
 \section{Primality}
 	\kactlimport{FastEratosthenes.h}
@@ -15,17 +16,17 @@
 	\kactlimport{Factor.h}
 
 \section{Divisibility}
-	\kactlimport{euclid.h}
+%	\kactlimport{euclid.h}
 	% \kactlimport{Euclid.java}
 	\kactlimport{CRT.h}
 
-	\subsection{Bézout's identity}
-	For $a \neq $, $b \neq 0$, then $d=gcd(a,b)$ is the smallest positive integer for which there are integer solutions to
-	$$ax+by=d$$
-	If $(x,y)$ is one solution, then all solutions are given by
-	$$\left(x+\frac{kb}{\gcd(a,b)}, y-\frac{ka}{\gcd(a,b)}\right), \quad k\in\mathbb{Z}$$
+%	\subsection{Bézout's identity}
+%	For $a \neq $, $b \neq 0$, then $d=gcd(a,b)$ is the smallest positive integer for which there are integer solutions to
+%	$$ax+by=d$$
+%	If $(x,y)$ is one solution, then all solutions are given by
+%	$$\left(x+\frac{kb}{\gcd(a,b)}, y-\frac{ka}{\gcd(a,b)}\right), \quad k\in\mathbb{Z}$$
 
-	\kactlimport{phiFunction.h}
+%	\kactlimport{phiFunction.h}
 
 \section{Fractions}
 	\kactlimport{ContinuedFractions.h}
@@ -44,10 +45,10 @@
 	Primitive roots exist modulo any prime power $p^a$, except for $p = 2, a > 2$, and there are $\phi(\phi(p^a))$ many.
 	For $p = 2, a > 2$, the group $\mathbb Z_{2^a}^\times$ is instead isomorphic to $\mathbb Z_2 \times \mathbb Z_{2^{a-2}}$.
 
-\section{Estimates}
-	$\sum_{d|n} d = O(n \log \log n)$.
-
-	The number of divisors of $n$ is at most around 100 for $n < 5e4$, 500 for $n < 1e7$, 2000 for $n < 1e10$, 200\,000 for $n < 1e19$.
+%\section{Estimates}
+%	$\sum_{d|n} d = O(n \log \log n)$.
+%
+%	The number of divisors of $n$ is at most around 100 for $n < 5e4$, 500 for $n < 1e7$, 2000 for $n < 1e10$, 200\,000 for $n < 1e19$.
 
 \section{Mobius Function}
 \[

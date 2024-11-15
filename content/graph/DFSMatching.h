@@ -1,38 +1,83 @@
 /**
- * Author: Lukas Polacek
- * Date: 2009-10-28
- * License: CC0
- * Source:
- * Description: Simple bipartite matching algorithm. Graph $g$ should be a list
- * of neighbors of the left partition, and $btoa$ should be a vector full of
- * -1's of the same size as the right partition. Returns the size of
- * the matching. $btoa[i]$ will be the match for vertex $i$ on the right side,
- * or $-1$ if it's not matched.
- * Time: O(VE)
- * Usage: vi btoa(m, -1); dfsMatching(g, btoa);
- * Status: works
+ *	Author: nor
+ *	Date: 2024-11-11
+ *	License: CC0
+ *	Source: yosupo.judge
+ *	Description: Fast bipatrite algorithm
+ *	Time: O(VE), in real better
+ *	Status: works
  */
 #pragma once
+ 
+#include "randomizer.h"
 
-bool find(int j, vector<vi>& g, vi& btoa, vi& vis) {
-	if (btoa[j] == -1) return 1;
-	vis[j] = 1; int di = btoa[j];
-	for (int e : g[di])
-		if (!vis[e] && find(e, g, btoa, vis)) {
-			btoa[e] = di;
-			return 1;
+template <bool ToShuffle = false>
+struct bipartite_matching {
+	int n, m, flow = 0;
+	vt<vt<int>> g;
+	vt<int> matchL, matchR, dist;
+	bipartite_matching(int _n, int _m): n(_n), m(_m), g(_n), matchL(_n, -1), matchR(_m, -1), dist(_n) {}
+	void add(int u, int v) { g[u].push_back(v); }
+	void bfs() {
+		std::queue<int> q;
+		for (int u = 0; u < n; ++u) {
+			if (!~matchL[u]) q.push(u), dist[u] = 0;
+			else dist[u] = -1;
 		}
-	return 0;
-}
-int dfsMatching(vector<vi>& g, vi& btoa) {
-	vi vis;
-	rep(i,0,sz(g)) {
-		vis.assign(sz(btoa), 0);
-		for (int j : g[i])
-			if (find(j, g, btoa, vis)) {
-				btoa[j] = i;
-				break;
+		while (!q.empty()) {
+			int u = q.front();
+			q.pop();
+			for (auto v : g[u]) if (~matchR[v] && !~dist[matchR[v]]) {
+				dist[matchR[v]] = dist[u] + 1;
+				q.push(matchR[v]);
 			}
+		}
 	}
-	return sz(btoa) - (int)count(all(btoa), -1);
-}
+	bool dfs(int u) {
+		for (auto v : g[u])
+			if (!~matchR[v]) {
+				matchL[u] = v, matchR[v] = u;
+				return true;
+			}
+		for (auto v : g[u])
+			if (dist[matchR[v]] == dist[u] + 1 &&
+				dfs(matchR[v])) {
+				matchL[u] = v, matchR[v] = u;
+				return true;
+			}
+		return false;
+	}
+	int get_max_matching() {
+		if constexpr (ToShuffle) {
+			Random rng;
+			for (int i = 0; i < n; ++i)
+				std::random_shuffle(std::begin(g[i]), std::end(g[i]), rng);
+		}
+		while (true) {
+			bfs();
+			int augment = 0;
+			for (int u = 0; u < n; ++u)
+				if (!~matchL[u]) augment += dfs(u);
+			if (!augment) break;
+			flow += augment;
+		}
+		return flow;
+	}
+	std::pair<vt<int>, vt<int>> minimum_vertex_cover() {
+		vt<int> L, R;
+		for (int u = 0; u < n; ++u) {
+			if (!~dist[u])
+				L.push_back(u);
+			else if (~matchL[u])
+				R.push_back(matchL[u]);
+		}
+		return {L, R};
+	}
+	vt<std::pair<int, int>> get_edges() {
+		vt<std::pair<int, int>> ans;
+		for (int u = 0; u < n; ++u)
+			if (matchL[u] != -1)
+				ans.emplace_back(u, matchL[u]);
+		return ans;
+	}
+};

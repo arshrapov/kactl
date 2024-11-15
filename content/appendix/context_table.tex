@@ -1,0 +1,37 @@
+\documentclass{article}
+\usepackage{array} % Для улучшенного управления столбцами
+\usepackage{graphicx} % Для поворота таблицы
+
+\setlength{\arrayrulewidth}{0.25mm}  % Увеличиваем толщину линий
+\setlength{\tabcolsep}{9pt} % Увеличиваем отступы между столбцами
+\renewcommand{\arraystretch}{2} % Увеличиваем высоту строк
+
+\begin{document}
+
+    \begin{table}[h!]
+%        \rotatebox{90}
+        \centering
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+            \hline
+            \textbf{Condition} & A & B & C & D & E & F & G & H & I & J & K & L \\
+            \hline
+            Rafa read &   &   &   &   &   &   &   &   &   &   &   &   \\
+            \hline
+            Rafa has sol &   &   &   &   &   &   &   &   &   &   &   &   \\
+            \hline
+            Rafa in process &   &   &   &   &   &   &   &   &   &   &   &   \\
+            \hline
+            Sard read &   &   &   &   &   &   &   &   &   &   &   &   \\
+            \hline
+            Sard has sol &   &   &   &   &   &   &   &   &   &   &   &   \\
+            \hline
+            Svat read &   &   &   &   &   &   &   &   &   &   &   &   \\
+            \hline
+            Svat has sol &   &   &   &   &   &   &   &   &   &   &   &   \\
+            \hline
+            Svat in process &   &   &   &   &   &   &   &   &   &   &   &   \\
+            \hline
+        \end{tabular}
+    \end{table}
+
+\end{document}
